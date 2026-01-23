@@ -15,6 +15,18 @@
         {% endblock %}
     </head>
     <body>
+        <nav>
+			<a href={{ path("produits") }}>Produits</a>
+			{% if app.user %}
+				{# <a href={{ path("compte") }}>Compte</a> #}
+				{% if is_granted("view_user") %}
+					<a href={{ path("utilisateurs") }}>Utilisateurs</a>
+				{% endif %}
+			{% else %}
+				<a href={{ path("connexion") }}>Connexion</a>
+				<a href={{ path("inscription") }}>Inscription</a>
+			{% endif %}
+		</nav>
         {% block body %}{% endblock %}
     </body>
 </html>

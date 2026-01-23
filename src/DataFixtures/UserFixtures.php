@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
-use App\Util\RoleEnum;
+use App\Util\Roles;
 
 class UserFixtures extends Fixture
 {
@@ -32,13 +32,13 @@ class UserFixtures extends Fixture
             $user->setEmail($firstName . $lastName . "@truc.com");
             $user->setPassword("$2y$13$9uGgMHtDM55GkvNLMdCmsOjqvTzbncvbArUd0iJ3KC/7joD205WwK"); // 00000000
 
-            $roles = [ RoleEnum::USER ];
+            $roles = [ Roles::USER ];
 
             if (mt_rand(0, 2) == 2) {
-                $roles[] = RoleEnum::MANAGER;
+                $roles[] = Roles::MANAGER;
 
                 if (mt_rand(0, 1) == 1) {
-                    $roles[] = RoleEnum::ADMIN;
+                    $roles[] = Roles::ADMIN;
                 }
             }
 

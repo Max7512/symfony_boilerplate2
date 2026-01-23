@@ -33,15 +33,15 @@ final class ProductVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::EDIT:
-                return array_key_exists(RoleEnum::MANAGER, $user->getRoles()) || array_key_exists(RoleEnum::ADMIN, $user->getRoles());
+                return in_array(RoleEnum::MANAGER, $user->getRoles()) || in_array(RoleEnum::ADMIN, $user->getRoles());
                 break;
 
             case self::ADD:
-                return array_key_exists(RoleEnum::MANAGER, $user->getRoles()) || array_key_exists(RoleEnum::ADMIN, $user->getRoles());
+                return in_array(RoleEnum::MANAGER, $user->getRoles()) || in_array(RoleEnum::ADMIN, $user->getRoles());
                 break;
 
             case self::DELETE:
-                return array_key_exists(RoleEnum::MANAGER, $user->getRoles()) || array_key_exists(RoleEnum::ADMIN, $user->getRoles());
+                return in_array(RoleEnum::MANAGER, $user->getRoles()) || in_array(RoleEnum::ADMIN, $user->getRoles());
                 break;
         }
 

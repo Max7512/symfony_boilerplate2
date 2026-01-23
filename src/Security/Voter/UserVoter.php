@@ -5,7 +5,7 @@ namespace App\Security\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use App\Entity\User;
-use App\Util\RoleEnum;
+use App\Util\Roles;
 
 final class UserVoter extends Voter
 {
@@ -19,8 +19,8 @@ final class UserVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, [self::EDIT, self::EDIT_PASSWORD, self::ADD, self::DELETE])
-            && $subject instanceof \App\Entity\User;
+        return in_array($attribute, [self::VIEW, self::EDIT, self::EDIT_PASSWORD, self::ADD, self::DELETE])
+            && (!$subject || $subject instanceof User);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -35,11 +35,11 @@ final class UserVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::VIEW:
-                return array_key_exists(RoleEnum::ADMIN, $user->getRoles());
+                return in_array(Roles::ADMIN, $user->getRoles());
                 break;
 
             case self::EDIT:
-                return array_key_exists(RoleEnum::ADMIN, $user->getRoles()) || $subject->getId() == $user->getId();
+                return in_array(Roles::ADMIN, $user->getRoles()) || $subject->getId() == $user->getId();
                 break;
 
             case self::EDIT_PASSWORD:
@@ -47,11 +47,11 @@ final class UserVoter extends Voter
                 break;
 
             case self::ADD:
-                return array_key_exists(RoleEnum::ADMIN, $user->getRoles());
+                return in_array(Roles::ADMIN, $user->getRoles());
                 break;
 
             case self::DELETE:
-                return array_key_exists(RoleEnum::ADMIN, $user->getRoles());
+                return in_array(Roles::ADMIN, $user->getRoles());
                 break;
         }
 
