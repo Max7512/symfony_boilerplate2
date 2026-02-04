@@ -6,13 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class ProduitsController extends AbstractController
+final class VinylesController extends AbstractController
 {
-    #[Route('/', name: 'produits')]
+    #[Route('/vinyles', name: 'vinyles')]
     public function index(): Response
     {
-        return $this->render('produits/index.html.twig', [
-            'controller_name' => 'ProduitsController',
+        return $this->render('vinyles/index.html.twig', [
+            'controller_name' => 'VinylesController',
         ]);
     }
 }

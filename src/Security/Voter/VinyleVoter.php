@@ -5,20 +5,20 @@ namespace App\Security\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use App\Entity\User;
-use App\Util\RoleEnum;
+use App\Util\Roles;
 
-final class ProductVoter extends Voter
+final class VinyleVoter extends Voter
 {
-    public const EDIT = 'edit_product';
-    public const DELETE = 'delete_product';
-    public const ADD = 'add_product';
+    public const EDIT = 'edit_vinyle';
+    public const DELETE = 'delete_vinyle';
+    public const ADD = 'add_vinyle';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, [self::EDIT, self::ADD, self::DELETE])
-            && $subject instanceof \App\Entity\Product;
+            && $subject instanceof \App\Entity\Vinyle;
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -33,15 +33,15 @@ final class ProductVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::EDIT:
-                return in_array(RoleEnum::MANAGER, $user->getRoles()) || in_array(RoleEnum::ADMIN, $user->getRoles());
+                return in_array(Roles::MANAGER, $user->getRoles()) || in_array(Roles::ADMIN, $user->getRoles());
                 break;
 
             case self::ADD:
-                return in_array(RoleEnum::MANAGER, $user->getRoles()) || in_array(RoleEnum::ADMIN, $user->getRoles());
+                return in_array(Roles::MANAGER, $user->getRoles()) || in_array(Roles::ADMIN, $user->getRoles());
                 break;
 
             case self::DELETE:
-                return in_array(RoleEnum::MANAGER, $user->getRoles()) || in_array(RoleEnum::ADMIN, $user->getRoles());
+                return in_array(Roles::MANAGER, $user->getRoles()) || in_array(Roles::ADMIN, $user->getRoles());
                 break;
         }
 

@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\Product;
+use App\Entity\Vinyle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Product>
+ * @extends ServiceEntityRepository<Vinyle>
  */
-class ProductRepository extends ServiceEntityRepository
+class VinyleRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Product::class);
+        parent::__construct($registry, Vinyle::class);
     }
 
     //    /**
-    //     * @return Product[] Returns an array of Product objects
+    //     * @return Vinyle[] Returns an array of Vinyle objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,10 +31,10 @@ class ProductRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Product
+    //    public function findOneBySomeField($value): ?Vinyle
     //    {
     //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
+    //            ->andWhere('p.exampleField = :val
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()
