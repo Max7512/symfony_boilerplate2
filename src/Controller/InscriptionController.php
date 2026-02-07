@@ -32,7 +32,7 @@ class InscriptionController extends AbstractController
 
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('produits');
+            return $this->redirectToRoute('vinyles');
         }
 
         return $this->render('inscription/inscription.html.twig', [
