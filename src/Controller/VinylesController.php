@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Vinyle;
-use App\Form\VinyleType;
+use App\Form\Flow\VinyleMultiStepFlow;
 use App\Repository\VinyleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,9 +21,9 @@ final class VinylesController extends AbstractController
         ]);
     }
 
-    #[Route("/vinyles/form", name: "vinyle_add")]
-    #[Route("/vinyles/form/{id}", name: "vinyle_edit")]
-    public function form(VinyleRepository $vinyleRepository, Request $request, EntityManagerInterface $manager, int $id = null): Response
+    #[Route("/vinyles/flow", name: "vinyle_add")]
+    #[Route("/vinyles/flow/{id}", name: "vinyle_edit")]
+    public function flow(VinyleRepository $vinyleRepository, Request $request, EntityManagerInterface $manager, int $id = null): Response
     {
         if (!$id) {
             $vinyle = new Vinyle();
@@ -37,11 +37,12 @@ final class VinylesController extends AbstractController
             $this->denyAccessUnlessGranted('edit_vinyle', $vinyle);
         }
 
-        $form = $this->createForm(VinyleType::class, $vinyle);
+        /** @var FormFlowInterface $flow */
+        $flow = $this->createForm(VinyleMultiStepFlow::class, $vinyle);
 
-        $form->handleRequest($request);
+        $flow->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($flow->isSubmitted() && $flow->isValid() && $flow->isFinished()) {
             $manager->persist($vinyle);
             $manager->flush();
 
@@ -49,7 +50,7 @@ final class VinylesController extends AbstractController
         }
 
         return $this->render('vinyles/form.html.twig', [
-            'form' => $form->createView(),
+            'form' => $flow->getStepForm(),
         ]);
     }
 }

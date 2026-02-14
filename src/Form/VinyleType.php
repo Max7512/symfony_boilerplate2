@@ -2,40 +2,24 @@
 
 namespace App\Form;
 
-use App\Entity\Vinyle;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Positive;
+use App\Form\Flow\DTO\DescriptionDTO;
+use App\Form\Flow\DTO\NameDTO;
+use App\Form\Flow\DTO\PriceDTO;
+use Symfony\Component\Validator\Constraints\Valid;
 
-class VinyleType extends AbstractType
+class VinyleType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder
-            ->add('name', TextType::class, [
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ])
-            ->add('description', TextareaType::class)
-            ->add('price', NumberType::class, [
-                'constraints' => [
-                    new NotBlank(),
-                    new Positive(),
-                ],
-            ])
-        ;
-    }
+    public function __construct(
+        #[Valid(groups: ['step1'])]
+        public ?NameDTO $name = null,
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Vinyle::class,
-        ]);
+        #[Valid(groups: ['step2'])]
+        public ?DescriptionDTO $description = null,
+
+        #[Valid(groups: ['step3'])]
+        public ?PriceDTO $price = null,
+
+        public string $currentStep = 'step1',
+    ) {
     }
 }
