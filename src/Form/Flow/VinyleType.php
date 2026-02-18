@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Flow;
 
 use App\Form\Flow\DTO\DescriptionDTO;
 use App\Form\Flow\DTO\NameDTO;

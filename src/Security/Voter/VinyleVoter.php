@@ -5,6 +5,7 @@ namespace App\Security\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use App\Entity\User;
+use App\Entity\Vinyle;
 use App\Util\Roles;
 
 final class VinyleVoter extends Voter
@@ -18,7 +19,7 @@ final class VinyleVoter extends Voter
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, [self::EDIT, self::ADD, self::DELETE])
-            && $subject instanceof \App\Entity\Vinyle;
+            && (!$subject || $subject instanceof Vinyle);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool

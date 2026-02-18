@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Vinyle;
+use App\Form\Flow\DTO\DescriptionDTO;
+use App\Form\Flow\DTO\NameDTO;
+use App\Form\Flow\DTO\PriceDTO;
 use App\Form\Flow\VinyleMultiStepFlow;
+use App\Form\Flow\VinyleType;
 use App\Repository\VinyleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,8 +41,10 @@ final class VinylesController extends AbstractController
             $this->denyAccessUnlessGranted('edit_vinyle', $vinyle);
         }
 
+        $vinyleType = new VinyleType(new NameDTO($vinyle->getName()), new DescriptionDTO($vinyle->getDescription()), new PriceDTO($vinyle->getPrice()));
+
         /** @var FormFlowInterface $flow */
-        $flow = $this->createForm(VinyleMultiStepFlow::class, $vinyle);
+        $flow = $this->createForm(VinyleMultiStepFlow::class, $vinyleType);
 
         $flow->handleRequest($request);
 

@@ -8,7 +8,7 @@ use App\Form\Flow\VinyleStep3Type;
 use Symfony\Component\Form\Flow\AbstractFlowType;
 use Symfony\Component\Form\Flow\FormFlowBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Form\VinyleType;
+use App\Form\Flow\VinyleType;
 use Symfony\Component\Form\Flow\Type\NavigatorFlowType;
  
 class VinyleMultiStepFlow extends AbstractFlowType
