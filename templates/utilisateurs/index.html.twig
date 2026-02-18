@@ -5,7 +5,9 @@
 {% block body %}
     <h1>Utilisateurs</h1>
 
-    <a href="{{ path('utilisateur_add') }}">Ajouter un utilisateur</a>
+    {% if is_granted('add_user') %}
+        <a href="{{ path('utilisateur_add') }}">Ajouter un utilisateur</a>
+    {% endif %}
 
     <table>
         <thead>
